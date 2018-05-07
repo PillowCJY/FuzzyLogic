@@ -1,0 +1,48 @@
+/*To Jack
+Read this b4 u work
+- Austin	*/
+
+Four inputs in total
+
+rule 1 
+	inputs:
+	
+	X - Position of the cart
+	X'- Horizontal velocity of the cart
+
+	Fuzzy Sets
+	
+	Input X { in_nl -- cart is far away from the centre to the left
+				 in_ns -- cart is away from the centre to the left
+				 in_ze -- cart is centred
+				 in_ps -- cart is away from the centre to the right
+				 in_pl -- cart is far away from the centre to the right
+	}
+	
+	Input X'{ in_nl -- cart is moving to the left at a high speed
+				 in_ns -- cart is moving to the left at a normal speed
+				 in_ze -- cart is not moving
+				 in_ps -- cart is moving to the right at a normal speed
+				 in_pl -- cart is moving to the right at a high speed
+	}
+	
+	Output Sets{
+				 out_nvl -- largely push the cart to the left
+				 out_nl  -- medium large push the cart to the left
+				 out_nm  -- normal push the cart to the left 
+				 out_ns  -- small push the cart to the left
+				 out_ze  -- dont push
+				 out_ps  -- small push the cart to the right
+				 out_pm  --	normal push the cart to the right
+				 out_pl  -- medium large push the cart to the right
+				 out_pvl -- largely push the cart to the right
+	
+	}
+	Fuzzy Rules { (if X && X')
+		if nl && nl -- out_pvl		if ns && nl -- out_pl	if ze && nl -- out_pvl	if ps && nl -- out_ps	if pl && nl -- out_ze
+		if nl && ns -- out_pl		if ns && ns -- out_pm	if ze && ns -- out_pl	if ps && ns -- out_ze	if pl && ns -- out_ns
+		if nl && ze -- out_pm		if ns && ze -- out_ps	if ze && ze -- out_ze	if ps && ze -- out_ns	if pl && ze -- out_nm
+		if nl && ps -- out_ps		if ns && ps -- out_ze	if ze && ps -- out_nl	if ps && ps -- out_nm	if pl && ps -- out_nl
+		if nl && pl -- out_ze		if ns && pl -- out_ns	if ze && pl -- out_nvl	if ps && pl -- out_nl	if pl && pl -- out_nvl
+	
+	}

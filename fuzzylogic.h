@@ -74,7 +74,7 @@ float trapz (float x, trapezoid trz);
 float min_of (float values[],int no_of_inps);
 float fuzzy_system (float inputs[],fuzzy_system_rec fz);
 void free_fuzzy_rules (fuzzy_system_rec *fz);
-
+void setRules(fuzzy_system_rec *fl, short inputA, short inputB, short outPut, int i);
 
 
 
