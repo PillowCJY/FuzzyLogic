@@ -2,7 +2,7 @@
 Read this b4 u work
 - Austin	*/
 
-Four inputs in total
+4 inputs in total
 
 rule 1 
 	inputs:
@@ -46,3 +46,50 @@ rule 1
 		if nl && pl -- out_ze		if ns && pl -- out_ns	if ze && pl -- out_nvl	if ps && pl -- out_nl	if pl && pl -- out_nvl
 	
 	}
+
+rule 2
+
+	inputs:
+	
+	theta - angle of the pole with respect to the vertical
+	theta' - angular velocity of the pole
+	
+	Fuzzy Sets
+	
+	Input ¦È { in_nl -- pole is largely inclined to the left
+				 in_ns -- pole is inclined to the left
+				 in_ze -- pole is vertical
+				 in_ps -- pole is inclined to the right
+				 in_pl -- pole is largely inclined to the right
+	}
+	
+	Input ¦È'{ in_nl -- pole is falling to the left quickly
+				 in_ns -- pole is falling to the left
+				 in_ze -- pole is still
+				 in_ps -- pole is falling to the right
+				 in_pl -- pole is falling to the right quickly
+	}
+	
+	Output Sets{
+				 out_nvl -- largely push the cart to the left
+				 out_nl  -- medium large push the cart to the left
+				 out_nm  -- normal push the cart to the left 
+				 out_ns  -- small push the cart to the left
+				 out_ze  -- dont push
+				 out_ps  -- small push the cart to the right
+				 out_pm  --	normal push the cart to the right
+				 out_pl  -- medium large push the cart to the right
+				 out_pvl -- largely push the cart to the right
+	
+	}
+	
+	Fuzzy Rules { (if ¦È && ¦È')
+		if nl && nl -- out_pvl		if ns && nl -- out_pl	if ze && nl -- out_pvl	if ps && nl -- out_ps	if pl && nl -- out_ze
+		if nl && ns -- out_pl		if ns && ns -- out_pm	if ze && ns -- out_pl	if ps && ns -- out_ze	if pl && ns -- out_ns
+		if nl && ze -- out_pm		if ns && ze -- out_ps	if ze && ze -- out_ze	if ps && ze -- out_ns	if pl && ze -- out_nm
+		if nl && ps -- out_ps		if ns && ps -- out_ze	if ze && ps -- out_nl	if ps && ps -- out_nm	if pl && ps -- out_nl
+		if nl && pl -- out_ze		if ns && pl -- out_ns	if ze && pl -- out_nvl	if ps && pl -- out_nl	if pl && pl -- out_nvl
+	
+	}
+	
+	
